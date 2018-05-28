@@ -124,11 +124,19 @@ export default {
       this.mapObj.closePopup()
     },
     confirm () {
-      this.markerIds.push(Number(this.markerInfo.id) - 1)
+      if (this.markerIds.indexOf(Number(this.markerInfo.id) - 1) === -1) {
+        this.markerIds.push(Number(this.markerInfo.id) - 1)
+      }
       this.mapObj.updateMarker(this.markerInfo, { color: 'red', scale: 0.5 })
       this.mapObj.closePopup()
     },
     onchange: function (evt) {
+      this.markerIds = []
+      if (this.markerList.length) {
+        for (let i = 0; i < this.markerList.length; i++) {
+          this.mapObj.removeMarkerBylayerKey(this.markerList[i].id, 'commonLayer')
+        }
+      }
       let that = this
       var file
       var files = evt.target.files
@@ -159,16 +167,16 @@ export default {
         /* generate HTML */
         /* generate HTML */
         var JSON = XLSX.utils.sheet_to_json(ws)
-        // console.log(JSON)
         JSON.shift()
         console.log(JSON)
+        if (Object.getOwnPropertyNames(JSON[0]).length !== 8 && Object.getOwnPropertyNames(JSON[1]).length !== 6) {
+          that.$message({
+            message: '请上传正确的表格格式',
+            type: 'warning'
+          })
+          return false
+        }
         that.jsonData = JSON
-        // let res = that.jsonData.filter(function (item) {
-        //   if (item['像素GPS位置'] !== '/' && item['__EMPTY'] !== '/') {
-        //     return item
-        //   }
-        // })
-        // console.log(res)
         var markerList = []
         that.jsonData.forEach(element => {
           let markerInfo = {}
@@ -207,6 +215,7 @@ table {
 
 td {
   text-align: center;
+  cursor: pointer;
 }
 #out-table {
   float: left;

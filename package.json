@@ -1,6 +1,6 @@
 {
   "name": "hdmap",
-  "version": "3.0.22",
+  "version": "3.0.23",
   "description": "hdmap is a web GIS engine using openlayers 4.5",
   "main": "dist/hdmap.js",
   "directories": {

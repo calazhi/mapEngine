@@ -18,7 +18,6 @@ import mapImg from '@/assets/images/u768.jpg'
 import markerImg from '@/assets/images/icon.png'
 import img from '@/assets/images/u22560.png'
 import icon from '@/assets/images/u22456.png'
-import map from '@/assets/images/002.png'
 export default {
   name: 'TestMap',
   data () {
